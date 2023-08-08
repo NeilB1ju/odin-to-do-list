@@ -5,23 +5,32 @@ const thisWeek = document.querySelector(".this-week-button");
 
 //Creating the dom elements to be displayed in the various tabs
 const todayDom = document.createElement('div');
-const todayDomText = document.createElement('h2');
-todayDomText.textContent = "Today"; 
-todayDom.appendChild(todayDomText);
-
 const thisWeekDom = document.createElement('div');
-const thisWeekDomText = document.createElement('h2');
-thisWeekDomText.textContent = "This Week";
-thisWeekDom.appendChild(thisWeekDomText);
-
 const inboxDom = document.createElement('div');
-const inboxDomText = document.createElement('h2');
-inboxDomText.textContent = "Inbox";
-inboxDom.appendChild(inboxDomText);
+
+todayDom.innerHTML += `
+    <h2>Today</h2>
+    <div class="item-container">
+`
+
+thisWeekDom.innerHTML += `
+    <h2>This Week</h2>
+    <div class="item-container">
+`
+
+inboxDom.innerHTML += `
+    <h2>Inbox</h2>
+    <div class="item-container">
+`
 
 
 //Adding functionality to the tabs
 export default function tabsListeners() {
+
+    //Setting the initial tab to the inbox tab
+    inbox.classList.add('active');
+    main.appendChild(inboxDom);
+
     //Adding event listeners to each tab to know which one is active 
     today.addEventListener('click', () => {
         changeActive();
@@ -47,9 +56,9 @@ function changeActive () {
     thisWeek.classList.remove('active');
     today.classList.remove('active');
     inbox.classList.remove('active');
-    if(main.childNodes.length != 0){
-        main.removeChild(main.childNodes[0]); 
-    }
+    while (main.firstChild) {
+        main.removeChild(main.lastChild);
+      }
 }
 
 
