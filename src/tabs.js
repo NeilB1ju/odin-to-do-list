@@ -1,4 +1,5 @@
 import plusIcon from './images/plus.svg'
+import toDoItemCreator from './to-do-item';
 
 const main = document.querySelector('.main');
 const today = document.querySelector(".today-button");
@@ -64,7 +65,8 @@ function changeActive () {
 }
 
 
-//Function to add a create task button to any tab when necessary
+
+//Function to create the add task button and implement its functionality
 function createAddTask(domElement) {
     const addTaskButton = document.createElement('button');
     addTaskButton.classList.add('add-task');
@@ -75,28 +77,73 @@ function createAddTask(domElement) {
     addTaskButton.appendChild(plusImg);
     addTaskButton.appendChild(addTaskText);
     domElement.appendChild(addTaskButton);
+    
+    //The flag variable is used to determine whether the inputContainer has already been created or not 
+    let flag = 0;
+    const inputContainer = document.createElement('form');
+    inputContainer.classList.add('input-container');
+    //Prevents the page from reloading when the add button is clicked
+    function handleForm(event) { event.preventDefault(); } 
+    inputContainer.addEventListener('submit', handleForm);
 
     //Functionality of the add task button (Add task button dissapears and the input appears)
     addTaskButton.addEventListener('click' , () => {
-        const inputContainer = document.createElement('div');
-        inputContainer.classList.add('input-container');
-        const input = document.createElement('input');
-        input.type = "Text";
-        const buttonContainer = document.createElement('div');
-        buttonContainer.classList.add('button-container');
-        const addButton = document.createElement('button');
-        addButton.classList.add('add-button');
-        addButton.innerHTML = "Add";
-        const cancelButton = document.createElement('button');
-        cancelButton.classList.add('cancel-button');
-        cancelButton.innerHTML = "Cancel";
-        
-        buttonContainer.appendChild(addButton);
-        buttonContainer.appendChild(cancelButton);
-        inputContainer.appendChild(input);
-        inputContainer.appendChild(buttonContainer);
+        //If the input container does not exist we create it
+        if(flag==0){
 
-        addTaskButton.style.display = 'none';
-        domElement.appendChild(inputContainer);
+            const input = document.createElement('input');
+            input.type = "Text";
+            input.placeholder = "Enter Task Name";
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.classList.add('button-container');
+
+            const addButton = document.createElement('button');
+            addButton.classList.add('add-button');
+            addButton.innerHTML = "Add";
+            addButton.type = "submit";
+            //Event listener to add a task
+            addButton.addEventListener('click', () => {
+                //Checks whether or not an input has been entered
+                if(input.value == "" ){
+                    alert("Please enter a task name");
+                }
+                else{
+                    //Creating the task in the dom
+                    const taskName = input.value;
+                    const newItem = new toDoItemCreator(taskName);
+                    newItem.createItemDom(domElement);
+
+                    inputContainer.classList.add('inactive');
+                    addTaskButton.classList.remove('inactive');
+                    input.value = "";
+                }
+            });
+
+            const cancelButton = document.createElement('button');
+            cancelButton.classList.add('cancel-button');
+            cancelButton.innerHTML = "Cancel";
+            cancelButton.type = "button";
+            //Event listener to close the form
+            cancelButton.addEventListener('click', () => {
+                inputContainer.classList.add('inactive');
+                addTaskButton.classList.remove('inactive');
+            });
+            
+            buttonContainer.appendChild(addButton);
+            buttonContainer.appendChild(cancelButton);
+            inputContainer.appendChild(input);
+            inputContainer.appendChild(buttonContainer);
+            domElement.appendChild(inputContainer);
+            addTaskButton.classList.add('inactive');
+            flag+=1;
+        }
+
+        //The input container has already been created so we just have to change the classes to hide and show the correct elements.
+        else{
+            addTaskButton.classList.add('inactive');
+            inputContainer.classList.remove('inactive');
+        }
+
     });
 }

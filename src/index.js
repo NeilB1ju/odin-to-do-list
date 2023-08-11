@@ -2,7 +2,6 @@ import tabsListeners from "./tabs";
 
 tabsListeners();
 
-
-//Now work on generating an item and styling it 
-//Style the tasks 
+//Add strike text on button click. It broke
 //Add the projects section
+//Look at the message in main.js I think the file loader that im using might be outdated
