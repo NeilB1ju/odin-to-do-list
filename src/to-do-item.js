@@ -37,19 +37,16 @@ export default class toDoItemCreator{
                 circleImg.src = circleCheckIcon;
                 circleImg.classList.remove('circle');
                 circleImg.classList.add('checked-circle');
-                console.log(rightContainer)
-                rightContainer.removeChild(taskTitle);
+                leftContainer.removeChild(taskTitle);
                 strike.appendChild(taskTitle);
-                rightContainer.appendChild(strike);
-            }
+                leftContainer.appendChild(strike);            }
 
             else{
                 circleImg.src = circleIcon;
                 circleImg.classList.add('circle');
                 circleImg.classList.remove('checked-circle');
-                console.log(rightContainer)
-                rightContainer.removeChild(document.querySelector('.strike'));
-                rightContainer.appendChild(taskTitle);
+                leftContainer.removeChild(document.querySelector('.strike'));
+                leftContainer.appendChild(taskTitle);
             }
         })
         
@@ -70,10 +67,18 @@ export default class toDoItemCreator{
         const dateButton = document.createElement('button');
         dateButton.classList.add('date-button');
         dateButton.innerHTML = "Add Date";
-        //Functionality to add a date
+
+        //Functionality to add/modify a date
         dateButton.addEventListener('click', () => {
             rightContainer.replaceChild(dateInput,dateButton);
         })
+        
+        //Functionality to display the date that has been inputted
+        dateInput.addEventListener('input', () => {
+            dateButton.innerHTML = dateInput.value;
+            this.setDate(dateInput.value);
+            rightContainer.replaceChild(dateButton,dateInput);
+        });
 
         const leftContainer = document.createElement('div');
         leftContainer.classList.add('left-container');
