@@ -1,5 +1,5 @@
 import plusIcon from './images/plus.svg'
-import toDoItemCreator from './to-do-item';
+import toDoItemCreator from './task';
 
 const main = document.querySelector('.main');
 const today = document.querySelector(".today-button");
@@ -26,6 +26,7 @@ thisWeekDom.innerHTML += `
     <div class="item-container"></div>
 `
 
+export{inboxDom, todayDom, thisWeekDom}
 
 //Adding functionality to the tabs
 export default function tabsListeners() {
@@ -112,7 +113,7 @@ function createAddTask(domElement) {
                     //Creating the task in the dom
                     const taskName = input.value;
                     const newItem = new toDoItemCreator(taskName);
-                    newItem.createItemDom(domElement);
+                    newItem.createItemDom(domElement, null);
 
                     inputContainer.classList.add('inactive');
                     addTaskButton.classList.remove('inactive');
