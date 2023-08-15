@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Arimo:wght@500&family=Baumans&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Arimo','Poppins','Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+h1,h2{
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    font-size: 2.5rem;
+}
+
+h2{
+    font-size: 1.6rem;
+}
+
+p{
+    font-size: 1.2rem;
+}
+
+body{
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 15% 85%;
+    grid-template-columns: max(18%, 200px) 82%;
+}
+
+
+/* Styling the Header */
+
+header{
+    grid-area: 1 / 1 / 2 / 3;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    background-color: #333333;
+    color: white;
+}
+
+
+/* Styling the navbar */
+
+.navbar{
+    grid-area: 2 / 1 / 3 / 2;
+    padding: 20px;
+    background-color: #DDDDDD;
+}
+
+.nav-main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.nav-element{
+    height: 40px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    gap: 5px;
+    background-color: #DDDDDD;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nav-element:hover , .add-task:hover{
+    background-color: #CCCCCC;
+    cursor: pointer;
+}
+
+.nav-element.active{
+    font-weight: bold;
+    background-color: #CCCCCC;
+}
+
+
+/* For changing the body of the website for the different tabs */
+.tab-element.inactive{
+    display: none;
+}
+
+.nav-element > img{
+    width: 1.1em;
+    height: 1.1em;
+}
+
+.projects-text{
+    padding-top: 10px;
+}
+
+
+/* Styling the main body of the website */
+
+.main{
+    grid-area: 2 / 2 / 3 / 3;
+    background-color: #EEEEEE;
+    padding: 50px 10% 50px 10%;
+}
+
+
+/* Styling the add task button and the popup*/
+
+.add-task{
+    height: 35px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    border: none;
+    background-color: #EEEEEE;
+}
+
+.add-task > img {
+    width: 1.7em;
+    height: 1.7em;
+}
+
+.input-container{
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.input-container > input {
+    width: 100%;
+    outline: none;
+    border: 1px solid black;
+    height: 35px;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.1em;
+}
+
+.button-container{
+    display: flex;
+    gap: 20px;
+}
+
+.add-button, .cancel-button{
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    font-size: 1em;
+}
+
+.add-button:hover , .cancel-button:hover{
+    cursor: pointer;
+    filter: brightness(95%);
+}
+
+.add-button{
+    background-color: #A6F0A6;
+}
+
+.cancel-button{
+    background-color: #F5B2B2;
+}
+
+.input-container.inactive, .add-task.inactive{
+    display: none;
+}
+
+
+/* Styling the tasks */
+
+.item-container{
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.task-container{
+    height: 35px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #EEEEEE;
+}
+
+.task-container:hover{
+    background-color: #CCCCCC;
+}
+
+.left-container , .right-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+.image-button{
+    width: 1.7em;
+    height: 1.7em;
+    outline: none;
+    border: none;
+    background-color: inherit;
+}
+
+.image-button:hover, .date-button{
+    cursor: pointer;
+}
+
+.date-button{
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-size: 1.2rem;
+}
+
+input[type="date"]{
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #555;
+    height: 30px;
+    font-size: 1.1rem;
+}
