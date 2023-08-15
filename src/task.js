@@ -11,9 +11,14 @@ let generateClassName = 1;
 export default class toDoItemCreator{
     constructor(title){
         this.title = title;
+        this.tabPresence = {
+            'class': 0,
+            'today': 0,
+            'thisWeek': 0
+        }
     }   
 
-
+    
     setDate(date){
         this.date = date;
     }
@@ -36,26 +41,57 @@ export default class toDoItemCreator{
     compareDate(dateInput){
         const today = new Date();
         const inputDate = new Date(dateInput);
+        if(this.tabPresence['today'] == 1){
+            if(!(this.isSameDay(today,inputDate))){
+                this.removeItem("today")
+            }
+        }
         if(this.isSameDay(today,inputDate)){
             this.createItemDom(todayDom, dateInput);
+            this.tabPresence['today'] = 1;
         }
         if(this.isSameWeek(today,inputDate)){
+            if(this.tabPresence['thisWeek'] == 1){
+                this.removeItem("thisWeek")
+            }
             this.createItemDom(thisWeekDom, dateInput);
+            this.tabPresence['thisWeek'] = 1;
         }
     }
 
 
-    setId(domElement){
-        const newId = "task-" + generateClassName;
-        generateClassName+=1;
-        domElement.setAttribute("id", newId);
+    setClass(domElement){
+        if(this.tabPresence['class'] == 0 ){
+            const newClass = "task-" + generateClassName;
+            generateClassName+=1;
+            domElement.classList.add(newClass);
+            this.tabPresence['class'] = newClass; 
+        }
     }
 
 
-    removeItem(Id){
-        inboxDom.removeChild(document.getElementById(Id));
-        todayDom.removeChild(document.getElementById(Id));
-        thisWeekDom.removeChild(document.getElementById(Id));
+    //Used to remove all occurences of a task
+    removeItems(className){
+       inboxDom.querySelector("."+className).remove();
+       if(this.tabPresence['today'] == 1){
+        todayDom.querySelector("."+className).remove();
+       }
+       if(this.tabPresence['thisWeek'] == 1){
+        thisWeekDom.querySelector("."+className).remove();
+       }
+    }
+
+    //Used to remove a task specifically from the today or thisWeek tabs (Used on date change in inbox)
+    removeItem(input){
+        const className = this.tabPresence['class'];
+        if(input == "today"){
+            todayDom.querySelector("."+className).remove();
+            this.tabPresence['today'] = 0;
+        }
+        if(input == "thisWeek"){
+            thisWeekDom.querySelector("."+className).remove();
+            this.tabPresence['thisWeek'] = 0;
+        }
     }
 
 
@@ -64,6 +100,11 @@ export default class toDoItemCreator{
 
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
+        //Assigns the appropriate id to link tasks from the inbox tab to their counterparts in the other tabs.
+        if(this.tabPresence['class']!=0){
+            taskContainer.classList.add(this.tabPresence['class']);
+        }
+
 
         const taskTitle = document.createElement('p');
         taskTitle.innerHTML = this.title;
@@ -108,7 +149,7 @@ export default class toDoItemCreator{
 
         //Functionality for the cross button
         imageButton2.addEventListener('click', () => {
-            itemContainer.removeChild(taskContainer);
+            this.removeItems(this.tabPresence['class']);
         });
 
         
@@ -137,7 +178,7 @@ export default class toDoItemCreator{
         }
 
         else{
-            dateButton.innerHTML = date;
+            dateButton.innerHTML = this.date;
         }
 
 
@@ -153,6 +194,7 @@ export default class toDoItemCreator{
 
         taskContainer.appendChild(leftContainer);
         taskContainer.appendChild(rightContainer);
+        this.setClass(taskContainer);
         itemContainer.appendChild(taskContainer);
     }
 }
