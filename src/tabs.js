@@ -1,5 +1,8 @@
 import plusIcon from './images/plus.svg'
+import projectCreator from './project';
 import toDoItemCreator from './task';
+
+//Create an array to store every dom element. Use that to loop through all the dom elements and add event listeners to each one of them in the tab listeners function.
 
 const main = document.querySelector('.main');
 const today = document.querySelector(".today-button");
@@ -15,7 +18,7 @@ inboxDom.innerHTML += `
     <h2>Inbox</h2>
     <div class="item-container"></div>
 `
-createAddTask(inboxDom);
+createAddTask(inboxDom, "task");
 
 todayDom.innerHTML += `
     <h2>Today</h2>
@@ -68,13 +71,18 @@ function changeActive () {
 
 
 //Function to create the add task button and implement its functionality
-function createAddTask(domElement) {
+export function createAddTask(domElement, job) {
     const addTaskButton = document.createElement('button');
     addTaskButton.classList.add('add-task');
     const plusImg = document.createElement('img');
     plusImg.src = plusIcon;
     const addTaskText = document.createElement('p');
-    addTaskText.innerHTML = "Add Task";
+    if(job == "task"){
+        addTaskText.innerHTML = "Add Task";
+    }
+    else{
+        addTaskText.innerHTML = "Add Project";
+    }
     addTaskButton.appendChild(plusImg);
     addTaskButton.appendChild(addTaskText);
     domElement.appendChild(addTaskButton);
@@ -110,10 +118,17 @@ function createAddTask(domElement) {
                     alert("Please enter a task name");
                 }
                 else{
-                    //Creating the task in the dom
                     const taskName = input.value;
-                    const newItem = new toDoItemCreator(taskName);
-                    newItem.createItemDom(domElement, null);
+                    //Creating the task in the dom
+                    if(job == "task"){
+                        const newItem = new toDoItemCreator(taskName);
+                        newItem.createItemDom(domElement, null);
+                    }
+                    //Creating a tab for a project
+                    else{
+                        const newProject = new projectCreator(taskName);
+                        newProject.createTab();
+                    }
 
                     inputContainer.classList.add('inactive');
                     addTaskButton.classList.remove('inactive');

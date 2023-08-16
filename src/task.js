@@ -197,4 +197,5 @@ export default class toDoItemCreator{
         this.setClass(taskContainer);
         itemContainer.appendChild(taskContainer);
     }
+    
 }
