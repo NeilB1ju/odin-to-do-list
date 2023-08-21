@@ -1,6 +1,6 @@
-import circleIcon from './images/circle-outline.svg'
-import crossIcon from './images/close.svg'
-import circleCheckIcon from './images/check-circle-outline.svg'
+import circleIcon from './images/circle-outline.svg';
+import crossIcon from './images/close.svg';
+import circleCheckIcon from './images/check-circle-outline.svg';
 import { inboxDom, todayDom, thisWeekDom } from './tabs';
 import moment from 'moment';
 
@@ -14,7 +14,8 @@ export default class toDoItemCreator{
         this.tabPresence = {
             'class': 0,
             'today': 0,
-            'thisWeek': 0
+            'thisWeek': 0,
+            'project': 0
         }
     }   
 
@@ -47,14 +48,14 @@ export default class toDoItemCreator{
             }
         }
         if(this.isSameDay(today,inputDate)){
-            this.createItemDom(todayDom, dateInput);
+            this.createTaskDom(todayDom, dateInput);
             this.tabPresence['today'] = 1;
         }
         if(this.isSameWeek(today,inputDate)){
             if(this.tabPresence['thisWeek'] == 1){
                 this.removeItem("thisWeek")
             }
-            this.createItemDom(thisWeekDom, dateInput);
+            this.createTaskDom(thisWeekDom, dateInput);
             this.tabPresence['thisWeek'] = 1;
         }
     }
@@ -72,6 +73,10 @@ export default class toDoItemCreator{
 
     //Used to remove all occurences of a task
     removeItems(className){
+        if(this.tabPresence['project'] == 1){
+
+        }
+
        inboxDom.querySelector("."+className).remove();
        if(this.tabPresence['today'] == 1){
         todayDom.querySelector("."+className).remove();
@@ -95,8 +100,12 @@ export default class toDoItemCreator{
     }
 
 
-    createItemDom(domElement, date){
-        const itemContainer = domElement.childNodes[3];
+    createTaskDom(domElement, date){
+        let itemContainer = domElement.childNodes[3];
+        if(!itemContainer.classList.contains('item-container')){
+            itemContainer = domElement.childNodes[1];
+            this.tabPresence['project'] = 1
+        }
 
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
@@ -149,7 +158,12 @@ export default class toDoItemCreator{
 
         //Functionality for the cross button
         imageButton2.addEventListener('click', () => {
-            this.removeItems(this.tabPresence['class']);
+            if(this.tabPresence['project'] == 1){
+                domElement.querySelector("."+this.tabPresence['class']).remove();
+            }
+            else{
+                this.removeItems(this.tabPresence['class']);
+            }
         });
 
         

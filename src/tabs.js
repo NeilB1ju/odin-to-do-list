@@ -8,6 +8,7 @@ const main = document.querySelector('.main');
 const today = document.querySelector(".today-button");
 const inbox = document.querySelector(".inbox-button");
 const thisWeek = document.querySelector(".this-week-button");
+const projectsContainer = document.querySelector('.projects-container');
 
 //Creating the dom elements to be displayed in the various tabs
 const inboxDom = document.createElement('div');
@@ -29,7 +30,7 @@ thisWeekDom.innerHTML += `
     <div class="item-container"></div>
 `
 
-export{inboxDom, todayDom, thisWeekDom}
+export{inboxDom, todayDom, thisWeekDom, inbox}
 
 //Adding functionality to the tabs
 export default function tabsListeners() {
@@ -59,13 +60,16 @@ export default function tabsListeners() {
 }
 
 //Function to be called inside the event listeners
-function changeActive () {
+export function changeActive () {
     thisWeek.classList.remove('active');
     today.classList.remove('active');
     inbox.classList.remove('active');
+    for (let i = 0; i < projectsContainer.childNodes.length; i++) {
+        projectsContainer.childNodes[i].classList.remove('active');
+    }
     while (main.firstChild) {
         main.removeChild(main.lastChild);
-      }
+    }
 }
 
 
@@ -119,11 +123,13 @@ export function createAddTask(domElement, job) {
                 }
                 else{
                     const taskName = input.value;
+                    
                     //Creating the task in the dom
                     if(job == "task"){
                         const newItem = new toDoItemCreator(taskName);
-                        newItem.createItemDom(domElement, null);
+                        newItem.createTaskDom(domElement, null);
                     }
+                    
                     //Creating a tab for a project
                     else{
                         const newProject = new projectCreator(taskName);
