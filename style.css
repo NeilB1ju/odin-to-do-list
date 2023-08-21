@@ -28,8 +28,8 @@ body{
     height: 100vh;
     width: 100%; 
     display: grid;
-    grid-template-rows: 15% 85%;
-    grid-template-columns: max(18%, 200px) 82%;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: max(18%, 200px) 1fr;
 }
 
 
@@ -83,6 +83,11 @@ header{
     background-color: #CCCCCC;
 }
 
+.nav-element > img{
+    width: 1.1em;
+    height: 1.1em;
+}
+
 .projects-text{
     padding: 10px 0px 10px 0px;
 }
@@ -99,7 +104,6 @@ header{
 
 .project-name{
     font-size: 1.2rem;
-    padding: 10px;
 }
 
 
@@ -107,11 +111,6 @@ header{
 
 .tab-element.inactive{
     display: none;
-}
-
-.nav-element > img{
-    width: 1.1em;
-    height: 1.1em;
 }
 
 
@@ -250,3 +249,21 @@ input[type="date"]{
     height: 30px;
     font-size: 1.1rem;
 }
+
+
+/* Styling the Projects */
+
+.project-name-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-name-container{
+    display: flex;
+    align-items: center;
+}
+
+
+/* Media Queries */
+
