@@ -8,16 +8,25 @@ createAddTask(projectAdd, "project");
 
 //Implementing mobile responsiveness
 const nav = document.querySelector('.navbar');
-const navCopy = nav.cloneNode(true);
 const header = document.querySelector('.header');
 const navButton = document.querySelector('.nav-button');
 navButton.addEventListener('click', () =>{
-    if(navCopy.classList.contains('active')){
-        navCopy.classList.remove('active');
-        header.removeChild(navCopy);
+    if(nav.classList.contains('active')){
+        nav.classList.remove('active');
+        header.removeChild(nav);
     }
     else{
-        navCopy.classList.add('active');
-        header.appendChild(navCopy);
+        nav.classList.add('active');
+        header.appendChild(nav);
     }
-})
+});
+
+
+function hideNavbar() {
+    if (window.innerWidth > 768) {
+        nav.classList.remove('active');
+        document.body.appendChild(nav);
+    }
+}
+
+window.addEventListener('resize', hideNavbar);
