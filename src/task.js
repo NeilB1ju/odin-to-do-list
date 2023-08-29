@@ -41,6 +41,9 @@ export default class toDoItemCreator{
     compareDate(dateInput){
         const today = new Date();
         const inputDate = new Date(dateInput);
+        if(this.tabPresence['thisWeek'] == 1){
+            this.removeItem("thisWeek")
+        }
         if(this.tabPresence['today'] == 1){
             if(!(this.isSameDay(today,inputDate))){
                 this.removeItem("today")
@@ -51,9 +54,6 @@ export default class toDoItemCreator{
             this.tabPresence['today'] = 1;
         }
         if(this.isSameWeek(today,inputDate)){
-            if(this.tabPresence['thisWeek'] == 1){
-                this.removeItem("thisWeek")
-            }
             this.createTaskDom(thisWeekDom, dateInput);
             this.tabPresence['thisWeek'] = 1;
         }
@@ -189,7 +189,6 @@ export default class toDoItemCreator{
         else{
             dateButton.innerHTML = this.date;
         }
-
 
         const leftContainer = document.createElement('div');
         leftContainer.classList.add('left-container');
