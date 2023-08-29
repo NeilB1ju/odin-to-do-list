@@ -7,7 +7,6 @@ import moment from 'moment';
 //Used to generate a unique class name for new tasks.
 let generateClassName = 1;
 
-
 export default class toDoItemCreator{
     constructor(title){
         this.title = title;
@@ -73,10 +72,6 @@ export default class toDoItemCreator{
 
     //Used to remove all occurences of a task
     removeItems(className){
-        if(this.tabPresence['project'] == 1){
-
-        }
-
        inboxDom.querySelector("."+className).remove();
        if(this.tabPresence['today'] == 1){
         todayDom.querySelector("."+className).remove();
@@ -210,6 +205,5 @@ export default class toDoItemCreator{
         taskContainer.appendChild(rightContainer);
         this.setClass(taskContainer);
         itemContainer.appendChild(taskContainer);
-    }
-    
+    }   
 }

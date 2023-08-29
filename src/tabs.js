@@ -2,8 +2,6 @@ import plusIcon from './images/plus.svg'
 import projectCreator from './project';
 import toDoItemCreator from './task';
 
-//Create an array to store every dom element. Use that to loop through all the dom elements and add event listeners to each one of them in the tab listeners function.
-
 const main = document.querySelector('.main');
 const today = document.querySelector(".today-button");
 const inbox = document.querySelector(".inbox-button");
